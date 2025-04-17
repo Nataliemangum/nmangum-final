@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Number Guessing Game</title>
+  <style>
+    body {
+      background-color: #f2f2f2;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+
+    .game-box {
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      display: inline-block;
+    }
+
+    input[type="number"] {
+      padding: 8px;
+      font-size: 16px;
+      width: 80px;
+      margin: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #message {
+      font-size: 18px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-box">
+    <h1>🎯 Guess the Number!</h1>
+    <p>I'm thinking of a number between 1 and 100.</p>
+    <p>Can you guess it?</p>
+    <input type="number" id="guessInput" min="1" max="100" />
+    <button onclick="checkGuess()">Submit</button>
+    <p id="message"></p>
+    <p id="guessCount"></p>
+    <button onclick="resetGame()">Play Again</button>
+  </div>
+
+  <script>
+    let randomNumber = Math.floor(Math.random() * 100) + 1;
+    let guesses = 0;
+
+    function checkGuess() {
+      const guess = Number(document.getElementById("guessInput").value);
+      const message = document.getElementById("message");
+      const guessCount = document.getElementById("guessCount");
+      guesses++;
+
+      if (guess < 1 || guess > 100) {
+        message.textContent = "Please enter a number between 1 and 100.";
+      } else if (guess < randomNumber) {
+        message.textContent = "Too low! Try again.";
+      } else if (guess > randomNumber) {
+        message.textContent = "Too high! Try again.";
+      } else {
+        message.textContent = `🎉 Correct! The number was ${randomNumber}.`;
+        message.style.color = "green";
+      }
+
+      guessCount.textContent = `Guesses: ${guesses}`;
+    }
+
+    function resetGame() {
+      randomNumber = Math.floor(Math.random() * 100) + 1;
+      guesses = 0;
+      document.getElementById("guessInput").value = "";
+      document.getElementById("message").textContent = "";
+      document.getElementById("message").style.color = "black";
+      document.getElementById("guessCount").textContent = "";
+    }
+  </script>
+</body>
+</html>
